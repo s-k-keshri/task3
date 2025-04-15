@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Temperature Converter</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+    }
+    label, select, input, button {
+      display: block;
+      margin: 10px 0;
+    }
+    #result {
+      margin-top: 20px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <h1>Temperature Converter</h1>
+
+  <label for="temperature">Enter Temperature:</label>
+  <input type="text" id="temperature" placeholder="e.g. 32" />
+
+  <label for="unit">Select Unit:</label>
+  <select id="unit">
+    <option value="celsius">Celsius (°C)</option>
+    <option value="fahrenheit">Fahrenheit (°F)</option>
+    <option value="kelvin">Kelvin (K)</option>
+  </select>
+
+  <button onclick="convertTemperature()">Convert</button>
+
+  <div id="result"></div>
+
+  <script>
+    function convertTemperature() {
+      const tempInput = document.getElementById("temperature").value.trim();
+      const unit = document.getElementById("unit").value;
+      const resultDiv = document.getElementById("result");
+
+      const temp = parseFloat(tempInput);
+      if (isNaN(temp)) {
+        resultDiv.textContent = "Please enter a valid number.";
+        return;
+      }
+
+      let celsius, fahrenheit, kelvin;
+
+    
+      switch (unit) {
+        case "celsius":
+          celsius = temp;
+          fahrenheit = (temp * 9/5) + 32;
+          kelvin = temp + 273.15;
+          break;
+        case "fahrenheit":
+          celsius = (temp - 32) * 5/9;
+          fahrenheit = temp;
+          kelvin = celsius + 273.15;
+          break;
+        case "kelvin":
+          celsius = temp - 273.15;
+          fahrenheit = (celsius * 9/5) + 32;
+          kelvin = temp;
+          break;
+      }
+
+      resultDiv.innerHTML = `
+        <p>Celsius: ${celsius.toFixed(2)} °C</p>
+        <p>Fahrenheit: ${fahrenheit.toFixed(2)} °F</p>
+        <p>Kelvin: ${kelvin.toFixed(2)} K</p>
+      `;
+    }
+  </script>
+</body>
+</html>
